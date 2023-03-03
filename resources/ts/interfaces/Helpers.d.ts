@@ -1,0 +1,3 @@
+interface NavLinkProps {
+    title: string,
+}
