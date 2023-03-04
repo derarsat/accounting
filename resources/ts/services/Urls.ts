@@ -15,6 +15,6 @@ const Urls = {
 
 export function getUrl(key: keyof typeof Urls) {
     // @ts-ignore
-    const baseUrl = import.meta.env.VITE_API;
+    const baseUrl = "api/";
     return baseUrl + Urls[key];
 }
