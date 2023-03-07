@@ -9,12 +9,21 @@ class ProductVariant extends Model
 {
     use HasFactory;
 
-    public function quantity(){
+    public $guarded = [];
+
+
+    public function quantity(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Quantity::class);
     }
 
+    public function product(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 
-    public function trader(){
+    public function trader(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
         return $this->belongsTo(Trader::class);
     }
 }

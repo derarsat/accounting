@@ -10,7 +10,8 @@ const Urls = {
     events: "events",
     trader: "trader",
     config: "config",
-    wallet: "wallet-operation"
+    wallet: "wallet-operation",
+    product_variant: "add_product_variant"
 }
 
 export function getUrl(key: keyof typeof Urls) {

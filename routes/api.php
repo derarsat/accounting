@@ -46,3 +46,4 @@ Route::apiResource("wallet-operation", WalletOperationController::class);
 
 
 Route::get("config", [\App\Http\Controllers\ConfigController::class, 'getProductExtras']);
+Route::post("add_product_variant", [\App\Http\Controllers\ConfigController::class, 'addProductVariant']);

@@ -33,6 +33,24 @@
                 <ProductForm :product="active" :is-edit="isEdit" @refresh="getProducts()"/>
             </n-card>
         </n-modal>
+
+
+        <!--  Dialog  -->
+        <n-modal v-model:show="showAddVariant">
+            <n-card
+                style="width: 1200px"
+                title="Product variant details"
+                :bordered="false"
+                size="huge"
+                role="dialog"
+                aria-modal="true"
+            >
+                <ProductVariantForm @refresh="getProducts()" :active-product-weight-type="activeProductWeightType"
+                                    :product_id="activeProductIdToAddVariant"/>
+            </n-card>
+        </n-modal>
+
+
     </n-space>
 </template>
 <script setup lang="ts">
@@ -43,13 +61,17 @@ import {TableColumns} from "naive-ui/es/data-table/src/interface";
 import {GridOutline as GridIcon, Pencil} from "@vicons/ionicons5";
 import ProductForm from "../forms/ProductForm.vue";
 import ListOfVariants from "../components/ListOfVariants.vue";
+import ProductVariantForm from "../forms/ProductVariantForm.vue";
 
 
 const active = ref<Product>({} as Product);
 const sortBy = ref("id")
 const orderBy = ref("desc")
 const showDialog = ref(false);
+const showAddVariant = ref(false);
 const isEdit = ref(false);
+const activeProductIdToAddVariant = ref<number>();
+const activeProductWeightType = ref<string>();
 const productService = new ProductService();
 const products = ref<Product[]>([]);
 const loading = ref<boolean>(true);
@@ -61,17 +83,21 @@ const columns: TableColumns<any> = [
         renderExpand: (rowData: Product) => {
             return h(
                 "div",
-                [
-                    h(
-                        NH3,
-                        {},
-                        {default: () => "Variations"}
-                    ),
-                    h(
-                        ListOfVariants,
-                        {variants: rowData.variants, weightUnit: rowData.weight}
-                    )
-                ]
+                {},
+                {
+                    default: () => [
+                        h(
+                            NH3,
+                            {},
+                            {default: () => "Variations"}
+                        ),
+                        h(
+                            ListOfVariants,
+                            {variants: rowData.variants, weightUnit: rowData.weight},
+                            {default: () => ''}
+                        )
+                    ]
+                }
             )
         }
     },
@@ -86,6 +112,12 @@ const columns: TableColumns<any> = [
         title: "Name",
         align: "center",
         key: "name",
+        sorter: true,
+    },
+    {
+        title: "Alert when remaining ",
+        align: "center",
+        key: "alert_when_remaining",
         sorter: true,
     },
     {
@@ -131,14 +163,29 @@ const columns: TableColumns<any> = [
                 {
                     size: 4
                 },
-                [
-                    h(NButton, {type: "primary", onClick: () => showEdit(row)}, {default: () => "Edit"}),
-                    row.variants.length == 0 ? h(NButton, {type: "info"}, {default: () => "Add Variants"}) : h("div", {}, {})
-                ]
+                {
+                    default: () => [
+                        h(NButton, {type: "primary", onClick: () => showEdit(row)}, {default: () => "Edit"}),
+                        row.variants.length == 0 ? h(
+                            NButton,
+                            {
+                                type: "info",
+                                onClick: () => {
+                                    showAddVariant.value = true;
+                                    activeProductIdToAddVariant.value = row.id
+                                    activeProductWeightType.value = row.weight
+                                }
+                            },
+                            {
+                                default: () => "Add Variants"
+                            }) : h("div", {}, {default: () => ""})
+                    ]
+                }
             );
         },
     },
 ];
+
 const pagination = reactive({
     page: 1,
     pageSize: 15,
@@ -165,6 +212,7 @@ function showEdit(product: Product) {
 
 async function getProducts() {
     showDialog.value = false;
+    showAddVariant.value = false
     active.value = undefined;
     isEdit.value = false;
     loading.value = true;

@@ -16,4 +16,8 @@ export class ProductService {
     async update(product: Product): Promise<Response> {
         return await this.http.put(getUrl("product"), product)
     }
+
+    async addProductVariant(product: ProductVariant): Promise<Response> {
+        return await this.http.post(getUrl("product_variant"), product)
+    }
 }

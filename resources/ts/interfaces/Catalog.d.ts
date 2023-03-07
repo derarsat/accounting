@@ -21,7 +21,7 @@ interface ProductVariant {
     trader_id?: number;
     quantity_value?: number;
     quantity?: Quantity,
-    trader: Trader,
+    trader?: Trader,
     purchased?: number;
     min_price?: number;
     price?: number;
@@ -31,6 +31,8 @@ interface ProductVariant {
     extra_quantity?: number,
     weight_value?: string;
     expire?: Date;
+    extra_cost?: number;
+    tva?: boolean;
     created_at?: Date;
     updated_at?: Date;
 }

@@ -147,6 +147,7 @@ async function getConfig() {
         sessionStorage.setItem("quantities", JSON.stringify(r.data.quantities))
         sessionStorage.setItem("expenses", JSON.stringify(r.data.expenses))
         sessionStorage.setItem("currencies", JSON.stringify(r.data.currencies))
+        sessionStorage.setItem("traders", JSON.stringify(r.data.traders))
         loading.value = false
     })
 }

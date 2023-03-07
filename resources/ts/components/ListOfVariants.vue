@@ -1,5 +1,5 @@
 <template>
-    <n-data-table :columns="columns" :data="variants">
+    <n-data-table :columns="columns" :data="variants" :key="Math.random()">
 
     </n-data-table>
 </template>
