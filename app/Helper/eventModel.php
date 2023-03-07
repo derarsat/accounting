@@ -12,4 +12,5 @@ enum eventModel: string
     case BranchEvent = "branch";
     case ExpenseEvent = "expense";
     case QuantityEvent = "quantity";
+    case TraderEvent = "trader";
 }

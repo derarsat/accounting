@@ -11,27 +11,27 @@
                     <n-input v-model:value="formValue.phone"/>
                 </n-form-item>
             </n-grid-item>
-            <n-grid-item >
+            <n-grid-item>
                 <n-form-item label="Address" path="address">
                     <n-input v-model:value="formValue.address"/>
                 </n-form-item>
             </n-grid-item>
             <n-grid-item v-if="!isEdit">
                 <n-form-item label="To Collect" path="we_owe_him">
-                    <n-input v-model:value="formValue.we_owe_him">
+                    <n-input-number v-model:value="formValue.we_owe_him">
                         <template #prefix>
                             $
                         </template>
-                    </n-input>
+                    </n-input-number>
                 </n-form-item>
             </n-grid-item>
             <n-grid-item v-if="!isEdit">
                 <n-form-item label="To Pay" path="he_owes_us">
-                    <n-input v-model:value="formValue.he_owes_us">
+                    <n-input-number v-model:value="formValue.he_owes_us">
                         <template #prefix>
                             $
                         </template>
-                    </n-input>
+                    </n-input-number>
                 </n-form-item>
             </n-grid-item>
             <n-grid-item></n-grid-item>
@@ -64,12 +64,12 @@ const message = useMessage();
 const traderService = new TraderService();
 const loading = ref(false)
 const formValue = ref<Trader>({
-    name: "",
-    phone: "",
-    address: "",
+    name: null,
+    phone: null,
+    address: null,
     he_owes_us: 0,
     we_owe_him: 0,
-    id: 0,
+    id: null,
 });
 const rules = {
     name: {
