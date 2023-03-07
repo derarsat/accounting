@@ -28,7 +28,7 @@ export default defineComponent({
                             type: "primary"
                         },
                         {
-                            default: () => row?.quantity_value + " " + row?.quantity.name,
+                            default: () => row?.quantity_value + " " + row?.quantity.name + ` (${row?.extra_quantity} extra pieces)`,
                         }
                     );
                 },

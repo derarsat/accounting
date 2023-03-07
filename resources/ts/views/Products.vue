@@ -121,6 +121,23 @@ const columns: TableColumns<any> = [
         sorter: true,
     },
     {
+        title: "Quantity (Pieces)",
+        align: "center",
+        key: "total_earnings",
+        render(row: Product) {
+            return h(
+                NText,
+                {
+                    type: "primary"
+                },
+                {
+                    default: () => helpers.getPiecesQuantity(row.variants),
+                }
+            );
+        },
+        sorter: true,
+    },
+    {
         title: "Total Earnings",
         align: "center",
         key: "total_earnings",

@@ -40,7 +40,7 @@ interface ProductVariant {
 interface Quantity {
     id?: number;
     name?: string;
-    number_of_pieces?: string;
+    number_of_pieces?: number;
     created_at?: Date;
     updated_at?: Date;
 }

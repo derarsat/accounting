@@ -16,6 +16,7 @@ class ProductVariantResource extends JsonResource
     {
         return [
             "quantity_value" => $this->quantity_value,
+            "extra_quantity" => $this->extra_quantity,
             "purchased" => $this->purchased,
             "barcode" => $this->barcode,
             "price" => $this->price,

@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
 //        \App\Models\Trader::factory(40)->create();
 //        \App\Models\WalletOperation::factory(150)->create();
 
-//        \App\Models\Product::factory(100)->create();
-//        \App\Models\ProductVariant::factory(100)->create();
+        \App\Models\Product::factory(100)->create();
+        \App\Models\ProductVariant::factory(100)->create();
 
 
     }

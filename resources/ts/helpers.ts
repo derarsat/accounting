@@ -42,7 +42,14 @@ export class Helpers {
 
     uppercase(value: string, readable = false) {
         let result = value.charAt(0).toUpperCase() + value.slice(1);
-         result = readable && result.replace("_", " ")
+        result = readable && result.replace("_", " ")
         return result
+    }
+
+
+    getPiecesQuantity(products: ProductVariant[]) {
+        let finalNumber = 0
+        products.forEach((product) => finalNumber += product.extra_quantity + (product.quantity.number_of_pieces * product.quantity_value))
+        return finalNumber
     }
 }
