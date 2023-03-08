@@ -17,14 +17,14 @@ class TraderFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->name,
             'phone' => fake()->phoneNumber(),
             'address' => fake()->address(),
-            'he_sold_us' => fake()->numberBetween(20, 20000),
-            'we_sold_him' => fake()->numberBetween(20, 20000),
-            'we_earned_from_him' => fake()->numberBetween(20, 20000),
-            'we_owe_him' => fake()->numberBetween(20, 20000),
-            'he_owes_us' => fake()->numberBetween(20, 20000),
+            'purchased' => fake()->numberBetween(20, 20000),
+            'sold' => fake()->numberBetween(20, 20000),
+            'earned' => fake()->numberBetween(20, 20000),
+            'to_pay' => fake()->numberBetween(20, 20000),
+            'to_collect' => fake()->numberBetween(20, 20000),
             'current_account' => fake()->numberBetween(20, 20000),
         ];
     }

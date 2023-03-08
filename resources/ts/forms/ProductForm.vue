@@ -43,9 +43,15 @@
             </n-grid-item>
             <!--Material-->
             <n-grid-item>
-                <n-form-item label="Material " path="material">
-                    <n-input placeholder="Please select product material" style="width: 100%"
-                             v-model:value="formValue.material"/>
+                <n-form-item label="Material" path="material_id">
+                    <n-select
+                        filterable
+                        placeholder="Please select a material"
+                        :options="materials"
+                        v-model:value="formValue.material_id"
+                        label-field="name"
+                        value-field="id"
+                    />
                 </n-form-item>
             </n-grid-item>
             <!--Weight-->
@@ -88,10 +94,13 @@ import {Helpers} from "../helpers";
 import {useNotification} from 'naive-ui'
 import {CategoryService} from "../services/CategoryService";
 import {ProductService} from "../services/ProductService";
+import {useGlobalStore} from "../store";
 
 const categories = ref([])
 const branches = ref([])
-const selectedValue = ref(null)
+const materials = ref([])
+
+
 const props = defineProps<{
     isEdit?: boolean;
     product?: Product;
@@ -106,7 +115,7 @@ const formValue = ref<Product>({
     category_id: null,
     branch_id: null,
     name: null,
-    material: null,
+    material_id: null,
     location: null,
     weight: null,
     alert_when_remaining: 10
@@ -123,9 +132,10 @@ const rules = {
         message: "Please input product location",
         trigger: ["input", "blur"],
     },
-    material: {
+    material_id: {
+        type: "number",
         required: true,
-        message: "Please input product material",
+        message: "Please select material",
         trigger: ["input", "blur"],
     },
     category_id: {
@@ -195,8 +205,9 @@ onMounted(() => {
         formValue.value.id = props.product?.id || 0;
     }
 // get categories and branches
-    categories.value = JSON.parse(sessionStorage.getItem("categories"))
-    branches.value = JSON.parse(sessionStorage.getItem("branches"))
+    categories.value = useGlobalStore().categories
+    branches.value = useGlobalStore().branches
+    materials.value = useGlobalStore()._materials
     formValue.value.category_id = categories.value[0].id
     formValue.value.branch_id = branches.value[0].id
 });

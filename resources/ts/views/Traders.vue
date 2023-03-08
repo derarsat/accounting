@@ -1,7 +1,7 @@
 <template>
     <n-space vertical :size="24">
         <n-h1>Traders</n-h1>
-        <n-grid :cols="6">
+        <n-grid :cols="7">
             <n-gi>
                 <n-statistic label="Count" :value="getStatistic(OperationType.Count)"/>
             </n-gi>
@@ -19,6 +19,9 @@
             </n-gi>
             <n-gi>
                 <n-statistic label="Earned" :value="getStatistic(OperationType.Earned)"/>
+            </n-gi>
+            <n-gi>
+                <n-statistic label="Final" :value="getStatistic(OperationType.Final)"/>
             </n-gi>
         </n-grid>
         <n-space>
@@ -92,15 +95,15 @@ const columns: TableColumns<any> = [
     {
         title: "To Pay",
         align: "center",
-        key: "he_owes_us",
-        sorter: (row1, row2) => row1.he_owes_us - row2.he_owes_us,
+        key: "to_pay",
+        sorter: (row1, row2) => row1.to_pay - row2.to_pay,
 
         render(row: Trader) {
             return h(
                 NText,
                 {},
                 {
-                    default: () => helpers.format(row.he_owes_us) + "$",
+                    default: () => helpers.format(row.to_pay) + "$",
                 }
             );
         },
@@ -108,8 +111,8 @@ const columns: TableColumns<any> = [
     {
         title: "To Collect",
         align: "center",
-        key: "we_owe_him",
-        sorter: (row1, row2) => row1.we_owe_him - row2.we_owe_him,
+        key: "to_collect",
+        sorter: (row1, row2) => row1.to_collect - row2.to_collect,
         render(row: Trader) {
             return h(
                 NText,
@@ -117,7 +120,7 @@ const columns: TableColumns<any> = [
                     type: "error"
                 },
                 {
-                    default: () => helpers.format(row.we_owe_him) + "$",
+                    default: () => helpers.format(row.to_collect) + "$",
                 }
             );
         },
@@ -125,15 +128,15 @@ const columns: TableColumns<any> = [
     {
         title: "Sold",
         align: "center",
-        key: "we_sold_him",
-        sorter: (row1, row2) => row1.we_sold_him - row2.we_sold_him,
+        key: "sold",
+        sorter: (row1, row2) => row1.sold - row2.sold,
 
         render(row: Trader) {
             return h(
                 NText,
                 {},
                 {
-                    default: () => helpers.format(row.we_sold_him) + "$",
+                    default: () => helpers.format(row.sold) + "$",
                 }
             );
         },
@@ -141,15 +144,15 @@ const columns: TableColumns<any> = [
     {
         title: "Purchased",
         align: "center",
-        key: "he_sold_us",
-        sorter: (row1, row2) => row1.he_sold_us - row2.he_sold_us,
+        key: "purchased",
+        sorter: (row1, row2) => row1.purchased - row2.purchased,
 
         render(row: Trader) {
             return h(
                 NText,
                 {},
                 {
-                    default: () => helpers.format(row.he_sold_us) + "$",
+                    default: () => helpers.format(row.purchased) + "$",
                 }
             );
         },
@@ -157,8 +160,8 @@ const columns: TableColumns<any> = [
     {
         title: "Earned",
         align: "center",
-        key: "we_earned_from_him",
-        sorter: (row1, row2) => row1.we_earned_from_him - row2.we_earned_from_him,
+        key: "earned",
+        sorter: (row1, row2) => row1.earned - row2.earned,
 
         render(row) {
             return h(
@@ -167,7 +170,25 @@ const columns: TableColumns<any> = [
                     type: "primary",
                 },
                 {
-                    default: () => helpers.format(row.we_earned_from_him) + "$",
+                    default: () => helpers.format(row.earned) + "$",
+                }
+            );
+        },
+    },
+    {
+        title: "Final Account",
+        align: "center",
+        key: "current_account",
+        sorter: (row1, row2) => row1.current_account - row2.current_account,
+
+        render(row) {
+            return h(
+                NText,
+                {
+                    type: "primary",
+                },
+                {
+                    default: () => helpers.format(row.current_account) + "$",
                 }
             );
         },
@@ -218,20 +239,24 @@ function getStatistic(type: OperationType) {
     }
 
     if (type === OperationType.ToPay) {
-        result = new Helpers().format(traders.value.reduce((n, {he_owes_us}) => n + he_owes_us, 0)) + "$"
+        result = new Helpers().format(traders.value.reduce((n, {to_pay}) => n + to_pay, 0)) + "$"
     }
 
     if (type === OperationType.Earned) {
-        result = new Helpers().format(traders.value.reduce((n, {we_earned_from_him}) => n + we_earned_from_him, 0)) + "$"
+        result = new Helpers().format(traders.value.reduce((n, {earned}) => n + earned, 0)) + "$"
     }
     if (type === OperationType.Purchased) {
-        result = new Helpers().format(traders.value.reduce((n, {he_sold_us}) => n + he_sold_us, 0)) + "$"
+        result = new Helpers().format(traders.value.reduce((n, {purchased}) => n + purchased, 0)) + "$"
     }
     if (type === OperationType.Sold) {
-        result = new Helpers().format(traders.value.reduce((n, {we_sold_him}) => n + we_sold_him, 0)) + "$"
+        result = new Helpers().format(traders.value.reduce((n, {sold}) => n + sold, 0)) + "$"
     }
     if (type === OperationType.Collect) {
-        result = new Helpers().format(traders.value.reduce((n, {we_owe_him}) => n + we_owe_him, 0)) + "$"
+        result = new Helpers().format(traders.value.reduce((n, {to_collect}) => n + to_collect, 0)) + "$"
+    }
+
+    if (type === OperationType.Final) {
+        result = new Helpers().format(traders.value.reduce((n, {current_account}) => n + current_account, 0)) + "$"
     }
     return result
 
@@ -244,8 +269,8 @@ enum OperationType {
     Sold = "sold",
     Purchased = "purchased",
     Earned = "earned",
-    Collect = "collect"
-
+    Collect = "collect",
+    Final = "final"
 }
 
 watch(search, () => searchTrader())

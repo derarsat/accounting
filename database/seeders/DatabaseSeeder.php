@@ -24,14 +24,14 @@ class DatabaseSeeder extends Seeder
 //        ]);
 //        \App\Models\Currency::factory(5)->create();
 //        \App\Models\Branch::factory(5)->create();
-//        \App\Models\Expense::factory(15)->create();
-//        \App\Models\Quantity::factory(10)->create();
-//        \App\Models\Category::factory(10)->create();
-//        \App\Models\Trader::factory(40)->create();
-//        \App\Models\WalletOperation::factory(150)->create();
-
-        \App\Models\Product::factory(100)->create();
-        \App\Models\ProductVariant::factory(100)->create();
+//        \App\Models\Expense::factory(50)->create();
+//        \App\Models\Quantity::factory(100)->create();
+//        \App\Models\Category::factory(200)->create();
+        \App\Models\Trader::factory(300)->create();
+//        \App\Models\WalletOperation::factory(1000)->create();
+//
+//        \App\Models\Product::factory(100)->create();
+//        \App\Models\ProductVariant::factory(500)->create();
 
 
     }

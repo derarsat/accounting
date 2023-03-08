@@ -28,6 +28,7 @@ import {FormInst, useMessage} from "naive-ui";
 import {Helpers} from "../helpers";
 import {useNotification} from 'naive-ui'
 import {QuantityService} from "../services/QuantityService";
+import {useGlobalStore} from "../store";
 
 const props = defineProps<{
     isEdit?: boolean;
@@ -64,6 +65,7 @@ function handleValidateClick(e: MouseEvent) {
         if (!errors) {
             loading.value = true
             const res = await quantityService.save(formValue.value, props.isEdit).finally(() => loading.value = false);
+            await useGlobalStore().getConfig()
             if (!res.success) {
                 const errorsString = helpers.generateResponseErrors(res)
                 notification.error({

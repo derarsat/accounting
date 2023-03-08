@@ -10,7 +10,7 @@
                         v-model:value="formValue.branch_id"
                         label-field="name"
                         value-field="id"
-                        @change="handleBranchChanged()"
+                        @update-value="handleBranchChanged"
                     />
                 </n-form-item>
             </n-grid-item>
@@ -19,7 +19,7 @@
                     <n-select
                         filterable
                         placeholder="Please select a branch"
-                        :options="expenses"
+                        :options="expensesTemp"
                         v-model:value="formValue.model_id"
                         label-field="name"
                         value-field="id"
@@ -50,6 +50,7 @@
             <n-grid-item>
                 <n-form-item label="Rate" path="rate">
                     <n-input-number
+                        :disabled="formValue.currency_id === 1"
                         :parse="helpers.parse"
                         :format="helpers.format"
                         style="width: 100%" v-model:value="formValue.rate"/>
@@ -91,10 +92,13 @@ enum WalletOperationType {
 const helpers = new Helpers();
 import {ref} from "vue";
 import {FormInst, FormRules, useMessage, useNotification} from "naive-ui";
+import {useGlobalStore} from "../store";
 
-const branches = ref<Branch[]>()
-const currencies = ref<Currency[]>()
-const expenses = ref<Expense[]>()
+const branches = computed(() => useGlobalStore().branches)
+const currencies = computed(() => useGlobalStore().currencies)
+const expenses = computed<Expense[]>(() => useGlobalStore().expenses as Expense[])
+const expensesTemp = ref(expenses.value.filter((expense) => expense.branch_id == branches.value[0].id))
+
 const emits = defineEmits(["refresh"]);
 
 const rules: FormRules = {
@@ -138,27 +142,24 @@ const rules: FormRules = {
     },
 }
 const formValue = ref<WalletOperation>({
-    branch_id: JSON.parse(sessionStorage.getItem("branches"))[0]["id"],
-    currency_id: JSON.parse(sessionStorage.getItem("currencies"))[0]["id"],
+    branch_id: useGlobalStore().branches[0]["id"],
+    currency_id: useGlobalStore().branches[0]["id"],
     type: WalletOperationType.Expense,
     amount: 0,
-    rate: 0,
+    rate: 1,
     model_id: null,
+    currency: currencies.value.filter((currency) => currency.symbol === "$")[0],
     description: ""
 });
 
 const formRef = ref<FormInst | null>(null);
-onMounted(() => {
-    branches.value = JSON.parse(sessionStorage.getItem("branches"))
-    handleBranchChanged()
-    currencies.value = JSON.parse(sessionStorage.getItem("currencies"))
-})
 
-function handleBranchChanged() {
+async function handleBranchChanged(v) {
     const activeBranch = formValue.value.branch_id
-    const expensesTemp: Expense[] = JSON.parse(sessionStorage.getItem("expenses"))
-    expenses.value = expensesTemp.filter((expense) => expense.branch_id == activeBranch)
-    formValue.value.model_id = expenses.value[0].id
+    await nextTick(() => {
+        expensesTemp.value = expenses.value.filter((expense) => expense.branch_id == v)
+        formValue.value.model_id = expenses.value[0].id
+    })
 }
 
 
@@ -168,6 +169,7 @@ function handleValidateClick(e: MouseEvent) {
         if (!errors) {
             loading.value = true
             const res = await accountingService.add(formValue.value).finally(() => loading.value = false);
+            await useGlobalStore().getConfig()
             if (!res.success) {
                 const errorsString = helpers.generateResponseErrors(res)
                 notification.error({

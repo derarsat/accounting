@@ -130,6 +130,7 @@ import {Helpers} from "../helpers";
 import {useNotification} from 'naive-ui'
 import {CategoryService} from "../services/CategoryService";
 import {ProductService} from "../services/ProductService";
+import {useGlobalStore} from "../store";
 
 const quantities = ref([])
 const traders = ref([])
@@ -248,6 +249,7 @@ function handleValidateClick(e: MouseEvent) {
         if (!errors) {
             loading.value = true
             const res = await new ProductService().addProductVariant(formValue.value).finally(() => loading.value = false);
+            await useGlobalStore().getConfig()
             if (!res.success) {
                 const errorsString = helpers.generateResponseErrors(res)
                 notification.error({
@@ -274,8 +276,8 @@ function handleValidateClick(e: MouseEvent) {
 onMounted(() => {
     formValue.value.product_id = props.product_id || 0;
 // get categories and branches
-    quantities.value = JSON.parse(sessionStorage.getItem("quantities"))
-    traders.value = JSON.parse(sessionStorage.getItem("traders"))
+    quantities.value = useGlobalStore().quantities
+    traders.value = useGlobalStore().traders
 });
 
 

@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('quantities', function (Blueprint $table) {
             $table->id();
             $table->string("name")->unique();
-            $table->string("number_of_pieces");
+            $table->float("number_of_pieces");
             $table->timestamps();
         });
     }

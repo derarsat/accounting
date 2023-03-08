@@ -3,11 +3,11 @@ interface Trader {
     name?: string;
     phone?: string;
     address?: string;
-    he_sold_us?: number;
-    we_sold_him?: number;
-    we_earned_from_him?: number;
-    we_owe_him?: number;
-    he_owes_us?: number;
+    purchased?: number;
+    sold?: number;
+    earned?: number;
+    to_pay?: number;
+    to_collect?: number;
     current_account?: number;
     created_at?: Date;
     updated_at?: Date;
@@ -32,6 +32,18 @@ interface WalletOperation {
 
 }
 
+interface Payment {
+    currency_id?: number,
+    id?: number,
+    trader_id?: number,
+    branch_id?: number,
+    currency?: Currency,
+    trader?: Trader,
+    branch?: Branch,
+    rate?: number,
+    amount?: number,
+    type?: PaymentAndInvoiceType,
+}
 
 declare enum WalletOperationType {
     PaymentIn = "payment_in",
@@ -39,4 +51,10 @@ declare enum WalletOperationType {
     InvoiceIn = "invoice_in",
     InvoiceOut = "invoice_out",
     Expense = "expense",
+}
+
+declare enum PaymentAndInvoiceType {
+    in = "in",
+    out = "out",
+
 }

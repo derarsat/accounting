@@ -53,6 +53,20 @@ const columns: TableColumns<any> = [
         key: "name",
     },
     {
+        title: "Branch",
+        align: "center",
+        key: "branch",
+        render(row: Expense) {
+            return h(
+                NText,
+                {},
+                {
+                    default: () => row.branch.name,
+                }
+            );
+        },
+    },
+    {
         title: "Total Cached Out",
         align: "center",
         key: "total",

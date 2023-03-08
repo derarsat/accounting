@@ -1,7 +1,7 @@
 interface Product {
     id?: number;
     name?: string;
-    material?: string;
+    material_id?: string;
     location?: string;
     weight?: string;
     alert_when_remaining?: number;

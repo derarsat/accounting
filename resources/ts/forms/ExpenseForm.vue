@@ -36,12 +36,13 @@ import {FormInst, useMessage} from "naive-ui";
 import {Helpers} from "../helpers";
 import {useNotification} from 'naive-ui'
 import {ExpensesService} from "../services/ExpensesService";
+import {useGlobalStore} from "../store";
 
 const props = defineProps<{
     isEdit?: boolean;
     expense?: Expense;
 }>();
-const branches = ref()
+const branches = computed(() => useGlobalStore().branches)
 const emits = defineEmits(["refresh"]);
 const helpers = new Helpers();
 const formRef = ref<FormInst | null>(null);
@@ -51,8 +52,8 @@ const loading = ref(false)
 const formValue = ref<Expense>({
     name: null,
     id: null,
-    branch: JSON.parse(sessionStorage.getItem("branches"))[0],
-    branch_id: JSON.parse(sessionStorage.getItem("branches"))[0]["id"],
+    branch: branches.value[0],
+    branch_id: branches.value[0]["id"],
 });
 const rules = {
     name: {
@@ -60,11 +61,12 @@ const rules = {
         message: "Please input expense name",
         trigger: ["input", "blur"],
     },
-    // branch_id: {
-    //     required: true,
-    //     message: "Please select branch",
-    //     trigger: ["input", "blur"],
-    // },
+    branch_id: {
+        type:"number",
+        required: true,
+        message: "Please select branch",
+        trigger: ["input", "blur"],
+    },
 };
 const notification = useNotification()
 
@@ -74,6 +76,7 @@ function handleValidateClick(e: MouseEvent) {
         if (!errors) {
             loading.value = true
             const res = await expensesService.save(formValue.value, props.isEdit).finally(() => loading.value = false);
+            await useGlobalStore().getConfig()
             if (!res.success) {
                 const errorsString = helpers.generateResponseErrors(res)
                 notification.error({
@@ -98,7 +101,6 @@ function handleValidateClick(e: MouseEvent) {
 }
 
 onMounted(() => {
-    branches.value = JSON.parse(sessionStorage.getItem("branches"))
     if (props.isEdit) {
         formValue.value.name = props.expense?.name;
         formValue.value.id = props.expense?.id;

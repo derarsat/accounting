@@ -24,6 +24,7 @@
             <n-grid-item>
                 <n-form-item label="Amount" path="amount">
                     <n-input-number
+                        :disabled="isEdit"
                         :parse="helpers.parse"
                         :format="helpers.format"
                         style="width: 100%"
@@ -48,6 +49,7 @@ import {FormInst, useMessage} from "naive-ui";
 import {Helpers} from "../helpers";
 import {CurrencyService} from "../services/CurrencyService";
 import {useNotification} from 'naive-ui'
+import {useGlobalStore} from "../store";
 
 const props = defineProps<{
     isEdit?: boolean;
@@ -72,16 +74,18 @@ const rules = {
         message: "Please input currency name",
         trigger: ["input", "blur"],
     },
-    // rate: {
-    //   required: true,
-    //   message: "Please input currency rate",
-    //   trigger: ["input", "blur"],
-    // },
-    // amount: {
-    //   required: true,
-    //   message: "Please input currency amount",
-    //   trigger: ["input", "blur"],
-    // },
+    rate: {
+        type: "number",
+        required: true,
+        message: "Please input currency rate",
+        trigger: ["input", "blur"],
+    },
+    amount: {
+        type: "number",
+        required: true,
+        message: "Please input currency amount",
+        trigger: ["input", "blur"],
+    },
     symbol: {
         required: true,
         message: "Please input currency symbol",
@@ -96,6 +100,7 @@ function handleValidateClick(e: MouseEvent) {
         if (!errors) {
             loading.value = true
             const res = await currencyService.save(formValue.value, props.isEdit).finally(() => loading.value = false);
+            await useGlobalStore().getConfig()
             if (!res.success) {
                 const errorsString = helpers.generateResponseErrors(res)
                 notification.error({

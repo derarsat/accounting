@@ -67,7 +67,7 @@ const columns: TableColumns<any> = [
         title: "Source",
         key: "model",
         align: "center",
-        render(row) {
+        render(row:SystemEventInterface) {
             return h(
                 NText,
                 {

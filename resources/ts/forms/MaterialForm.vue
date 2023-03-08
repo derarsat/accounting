@@ -36,6 +36,7 @@ import {FormInst, useMessage} from "naive-ui";
 import {Helpers} from "../helpers";
 import {useNotification} from 'naive-ui'
 import {MaterialService} from "../services/MaterialService";
+import {useGlobalStore} from "../store";
 
 const props = defineProps<{
     isEdit?: boolean;
@@ -52,8 +53,8 @@ const loading = ref(false)
 const formValue = ref<Material>({
     name: null,
     id: null,
-    branch: JSON.parse(sessionStorage.getItem("branches"))[0],
-    branch_id: JSON.parse(sessionStorage.getItem("branches"))[0]["id"],
+    branch: branches.value[0],
+    branch_id: branches.value[0]["id"],
 });
 const rules = {
     name: {
@@ -76,6 +77,7 @@ function handleValidateClick(e: MouseEvent) {
         if (!errors) {
             loading.value = true
             const res = await materialService.save(formValue.value, props.isEdit).finally(() => loading.value = false);
+            await useGlobalStore().getConfig()
             if (!res.success) {
                 const errorsString = helpers.generateResponseErrors(res)
                 notification.error({
@@ -106,7 +108,7 @@ onMounted(() => {
         formValue.value.branch = props.material?.branch;
         formValue.value.branch_id = props.material?.branch_id;
     }
-    branches.value = JSON.parse(sessionStorage.getItem("branches"))
+    branches.value = useGlobalStore().branches
 
 });
 </script>

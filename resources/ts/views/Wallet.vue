@@ -54,11 +54,15 @@ import WalletTop from "../components/WalletTop.vue";
 import {AccountingService} from "../services/AccountingService";
 import {EyeOutline} from "@vicons/ionicons5";
 import {ref} from "vue";
+import {useGlobalStore} from "../store";
 
 const branches = ref()
 const currencies = ref()
 const tomorrow = new Date().setDate(new Date().getDate() + 1)
-const range = ref<[number, number]>([Date.now(), tomorrow])
+const now = new Date().valueOf()
+const range = ref<[number, number]>([now, tomorrow])
+
+console.log(range.value)
 const sortBy = ref("created_at")
 const orderBy = ref("asc")
 const isEdit = ref(false);
@@ -265,8 +269,8 @@ function handleSorterChange(sorter) {
 
 onMounted(async () => {
     await getOperations();
-    branches.value = JSON.parse(sessionStorage.getItem("branches"))
-    currencies.value = JSON.parse(sessionStorage.getItem("currencies"))
+    branches.value = useGlobalStore().branches
+    currencies.value = useGlobalStore().currencies
 
 });
 

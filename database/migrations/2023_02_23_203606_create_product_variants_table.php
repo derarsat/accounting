@@ -27,6 +27,8 @@ return new class extends Migration {
             $table->string("identifier")->nullable();
             $table->string("weight_value")->nullable();
             $table->date("expire")->nullable();
+            $table->float("extra_cost")->default(0);
+            $table->boolean("tva")->default(false);
             $table->timestamps();
         });
     }

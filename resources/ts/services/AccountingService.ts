@@ -12,4 +12,9 @@ export class AccountingService {
         let url = getUrl("wallet") + `?page=${page}&per_page=${perPage}&sort=${sortBy}&order=${orderBy}&start=${start}&end=${end}&type=${type}`
         return await this.http.get(url)
     }
+
+
+    async addPayment(payment: Payment): Promise<Response> {
+        return await this.http.post(`${getUrl("payment")}`, payment)
+    }
 }

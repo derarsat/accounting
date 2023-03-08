@@ -18,11 +18,11 @@ return new class extends Migration
             $table->string("name")->unique();
             $table->string("phone")->unique();
             $table->string("address")->nullable();
-            $table->float("he_sold_us")->nullable();
-            $table->float("we_sold_him")->nullable();
-            $table->float("we_earned_from_him")->nullable();
-            $table->float("we_owe_him")->nullable();
-            $table->float("he_owes_us")->nullable();
+            $table->float("purchased")->nullable();
+            $table->float("sold")->nullable();
+            $table->float("earned")->nullable();
+            $table->float("to_pay")->nullable();
+            $table->float("to_collect")->nullable();
             $table->float("current_account")->nullable();
             $table->timestamps();
         });

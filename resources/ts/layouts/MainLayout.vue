@@ -1,5 +1,5 @@
 <template>
-    <n-layout has-sider v-if="!loading">
+    <n-layout has-sider>
         <n-layout-sider
             bordered
             show-trigger
@@ -15,20 +15,31 @@
                 :options="menuOptions"
             />
         </n-layout-sider>
+
         <n-layout-content content-style="padding:20px 40px">
-            <router-view/>
+            <n-spin size="large" :show="useGlobalStore().loading">
+                <template #icon>
+                    <n-icon>
+                        <Reload />
+                    </n-icon>
+                </template>
+                <router-view/>
+            </n-spin>
         </n-layout-content>
     </n-layout>
 </template>
 
 <script lang="ts" setup>
-import http from "../services/http";
 
+import {useGlobalStore} from "../store";
+
+const store = useGlobalStore()
 import {h, ref, Component, onMounted} from "vue";
 import {NIcon} from "naive-ui";
 import {
     Cash,
     Pulse,
+    Reload,
     Shuffle,
     GridOutline,
     PeopleOutline,
@@ -38,7 +49,7 @@ import {
     LibraryOutline, CubeOutline, BagOutline, BalloonOutline, WalletOutline, ColorFilterOutline
 } from "@vicons/ionicons5";
 import {RouterLink} from "vue-router";
-import {getUrl} from "../services/Urls";
+
 
 const loading = ref(true)
 
@@ -140,17 +151,5 @@ const menuOptions = [
 
 ];
 
-async function getConfig() {
-    await http.get(getUrl("config")).then(r => {
-        sessionStorage.setItem("branches", JSON.stringify(r.data.branches))
-        sessionStorage.setItem("categories", JSON.stringify(r.data.categories))
-        sessionStorage.setItem("quantities", JSON.stringify(r.data.quantities))
-        sessionStorage.setItem("expenses", JSON.stringify(r.data.expenses))
-        sessionStorage.setItem("currencies", JSON.stringify(r.data.currencies))
-        sessionStorage.setItem("traders", JSON.stringify(r.data.traders))
-        loading.value = false
-    })
-}
-
-onMounted(() => getConfig());
+onMounted(() => store.getConfig());
 </script>

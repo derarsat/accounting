@@ -51,8 +51,8 @@ class TraderController extends Controller
                 'name' => 'required|unique:traders',
                 'phone' => 'required|unique:traders',
                 'address' => 'required',
-                'he_owes_us' => 'numeric',
-                'we_owe_him' => 'numeric',
+                'to_collect' => 'numeric',
+                'to_pay' => 'numeric',
             ]);
         if ($validator->fails()) {
             $errors = $validator->messages()->get('*');
@@ -98,8 +98,8 @@ class TraderController extends Controller
                 'name' => 'required|unique:traders,name' . $trader->id,
                 'phone' => 'required|unique:traders,phone,' . $trader->id,
                 'address' => 'required',
-                'he_owes_us' => 'numeric',
-                'we_owe_him' => 'numeric',
+                'to_collect' => 'numeric',
+                'to_pay' => 'numeric',
             ]);
         if ($validator->fails()) {
             $errors = $validator->messages()->get('*');

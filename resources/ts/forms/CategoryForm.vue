@@ -36,6 +36,7 @@ import {FormInst, useMessage} from "naive-ui";
 import {Helpers} from "../helpers";
 import {useNotification} from 'naive-ui'
 import {CategoryService} from "../services/CategoryService";
+import {useGlobalStore} from "../store";
 
 const props = defineProps<{
     isEdit?: boolean;
@@ -51,8 +52,8 @@ const loading = ref(false)
 const formValue = ref<Category>({
     name: null,
     id: null,
-    branch: JSON.parse(sessionStorage.getItem("branches"))[0],
-    branch_id: JSON.parse(sessionStorage.getItem("branches"))[0]["id"],
+    branch: branches.value[0],
+    branch_id: branches.value[0]["id"],
 });
 const rules = {
     name: {
@@ -76,6 +77,7 @@ function handleValidateClick(e: MouseEvent) {
         if (!errors) {
             loading.value = true
             const res = await categoryService.save(formValue.value, props.isEdit).finally(() => loading.value = false);
+            await useGlobalStore().getConfig()
             if (!res.success) {
                 const errorsString = helpers.generateResponseErrors(res)
                 notification.error({
@@ -100,7 +102,7 @@ function handleValidateClick(e: MouseEvent) {
 }
 
 onMounted(() => {
-    branches.value = JSON.parse(sessionStorage.getItem("branches"))
+    branches.value = useGlobalStore().branches
     if (props.isEdit) {
         formValue.value.name = props.category?.name;
         formValue.value.id = props.category?.id;

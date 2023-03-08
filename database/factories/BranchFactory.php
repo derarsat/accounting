@@ -18,7 +18,7 @@ class BranchFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->word(),
+            'name' => fake()->name,
             'is_default' => fake()->boolean(),
         ];
     }

@@ -18,7 +18,7 @@ class ExpenseFactory extends Factory
     public function definition(): array
     {
         return [
-            "name" => $this->faker->word,
+            "name" => $this->faker->name,
             "total" => 0,
             'branch_id' => $this->faker->numberBetween(1, 5)
         ];

@@ -42,7 +42,7 @@ export class Helpers {
 
     uppercase(value: string, readable = false) {
         let result = value.charAt(0).toUpperCase() + value.slice(1);
-        result = readable && result.replace("_", " ")
+        readable && result.replace("_", " ")
         return result
     }
 

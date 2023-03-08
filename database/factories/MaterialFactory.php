@@ -18,7 +18,7 @@ class MaterialFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => $this->faker->name,
             'branch_id' => $this->faker->numberBetween(1, 5)
         ];
     }

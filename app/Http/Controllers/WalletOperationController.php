@@ -78,12 +78,16 @@ class WalletOperationController extends Controller
         $data = $validator->validated();
         $currency = Currency::find($data["currency_id"]);
         $data["currency_was"] = $currency->amount;
+        $currency->amount = $currency->amount - $data["amount"];
         $data["currency_became"] = $currency->amount - $data["amount"];
         $data["user_id"] = 1;
         $branch_name = Branch::find($data["branch_id"])->name;
         WalletOperation::create($data);
+        $currency->save();
         $this->addEvent(eventModel::WalletEvent, $data["amount"] . $currency->symbol . " Cash out from $branch_name ");
+        $this->addEvent(eventModel::CurrencyEvent, $data["amount"] . $currency->symbol . " payed as expense ");
         return $this->sendResponse(["message" => "Wallet operation added successfully"], true, []);
+
 
     }
 

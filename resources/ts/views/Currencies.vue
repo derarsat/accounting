@@ -68,7 +68,7 @@ const columns: TableColumns<any> = [
                     type: "default",
                 },
                 {
-                    default: () => row.rate,
+                    default: () => helpers.format(row.rate),
                 }
             );
         },

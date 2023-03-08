@@ -16,18 +16,27 @@
                     <n-input v-model:value="formValue.address"/>
                 </n-form-item>
             </n-grid-item>
-            <n-grid-item v-if="!isEdit">
-                <n-form-item label="To Collect" path="we_owe_him">
-                    <n-input-number v-model:value="formValue.we_owe_him">
+            <n-grid-item>
+                <n-form-item label="To Collect" path="to_collect">
+                    <n-input-number :disabled="isEdit" v-model:value="formValue.to_collect">
                         <template #prefix>
                             $
                         </template>
                     </n-input-number>
                 </n-form-item>
             </n-grid-item>
-            <n-grid-item v-if="!isEdit">
-                <n-form-item label="To Pay" path="he_owes_us">
-                    <n-input-number v-model:value="formValue.he_owes_us">
+            <n-grid-item>
+                <n-form-item label="To Pay" path="to_pay">
+                    <n-input-number :disabled="isEdit" v-model:value="formValue.to_pay">
+                        <template #prefix>
+                            $
+                        </template>
+                    </n-input-number>
+                </n-form-item>
+            </n-grid-item>
+            <n-grid-item>
+                <n-form-item label="Final Account" path="current_account">
+                    <n-input-number disabled v-model:value="formValue.current_account">
                         <template #prefix>
                             $
                         </template>
@@ -52,6 +61,7 @@ import {FormInst, useMessage} from "naive-ui";
 import {Helpers} from "../helpers";
 import {useNotification} from 'naive-ui'
 import {TraderService} from "../services/TraderService";
+import {useGlobalStore} from "../store";
 
 const props = defineProps<{
     isEdit?: boolean;
@@ -67,9 +77,10 @@ const formValue = ref<Trader>({
     name: null,
     phone: null,
     address: null,
-    he_owes_us: 0,
-    we_owe_him: 0,
+    to_collect: 0,
+    to_pay: 0,
     id: null,
+    current_account: 0,
 });
 const rules = {
     name: {
@@ -91,6 +102,7 @@ function handleValidateClick(e: MouseEvent) {
         if (!errors) {
             loading.value = true
             const res = await traderService.save(formValue.value, props.isEdit).finally(() => loading.value = false);
+            await useGlobalStore().getConfig()
             if (!res.success) {
                 const errorsString = helpers.generateResponseErrors(res)
                 notification.error({
@@ -120,6 +132,14 @@ onMounted(() => {
         formValue.value.id = props.trader?.id || 0;
         formValue.value.phone = props.trader?.phone || "";
         formValue.value.address = props.trader?.address || "";
+        formValue.value.to_pay = props.trader?.to_pay || 0;
+        formValue.value.to_collect = props.trader?.to_collect || 0;
+        formValue.value.current_account = props.trader?.current_account || 0;
     }
 });
+
+
+watch(formValue.value, () => {
+    formValue.value.current_account = formValue.value.to_collect - formValue.value.to_pay
+}, )
 </script>
