@@ -42,7 +42,7 @@ const quantityService = new QuantityService();
 const loading = ref(false)
 const formValue = ref<Quantity>({
     name: "",
-    id: 0,
+    id: null,
     number_of_pieces: 0
 });
 const rules = {

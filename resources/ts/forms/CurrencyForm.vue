@@ -66,7 +66,7 @@ const formValue = ref<Currency>({
     symbol: "",
     rate: 0,
     amount: 0,
-    id: 0,
+    id: null,
 });
 const rules = {
     name: {

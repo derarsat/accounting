@@ -43,7 +43,7 @@ const loading = ref(false)
 const formValue = ref<Branch>({
     name: "",
     is_default: false,
-    id: 0,
+    id: null,
 });
 const rules = {
     name: {
