@@ -58,7 +58,7 @@
             <n-grid-item>
                 <n-form-item>
                     <n-button :disabled="loading" :loading="loading" @click="handleValidateClick" type="primary">Save
-                        category
+                        payment
                     </n-button>
                 </n-form-item>
             </n-grid-item>
@@ -71,7 +71,6 @@ import {ref} from "vue";
 import {FormInst, useMessage} from "naive-ui";
 import {Helpers} from "../helpers";
 import {useNotification} from 'naive-ui'
-import {CategoryService} from "../services/CategoryService";
 import {useGlobalStore} from "../store";
 import {AccountingService} from "../services/AccountingService";
 enum PaymentAndInvoiceType {
@@ -97,12 +96,6 @@ const formValue = ref<Payment>({
     type: PaymentAndInvoiceType.in,
 });
 const rules = {
-    name: {
-        type: "string",
-        required: true,
-        message: "Please input category name",
-        trigger: ["input", "blur"],
-    },
     branch_id: {
         type: "number",
         required: true,
@@ -119,6 +112,20 @@ const rules = {
         type: "number",
         required: true,
         message: "Please select currency",
+        trigger: ["input", "blur"],
+    },
+
+    amount: {
+        type: "number",
+        required: true,
+        message: "Please select amount",
+        trigger: ["input", "blur"],
+    },
+
+    rate: {
+        type: "number",
+        required: true,
+        message: "Please select rate",
         trigger: ["input", "blur"],
     },
 };

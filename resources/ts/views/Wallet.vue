@@ -58,7 +58,7 @@ import {useGlobalStore} from "../store";
 
 const branches = computed(() => useGlobalStore().branches)
 const currencies = computed(() => useGlobalStore().currencies)
-const tomorrow = new Date().setDate(new Date().getDate() + 1)
+const tomorrow = new Date().setDate(new Date().getDate() + 2)
 const now = new Date().valueOf()
 const range = ref<[number, number]>([now, tomorrow])
 
@@ -269,8 +269,6 @@ function handleSorterChange(sorter) {
 
 onMounted(async () => {
     await getOperations();
-    branches.value = useGlobalStore().branches
-    currencies.value = useGlobalStore().currencies
 
 });
 

@@ -70,7 +70,7 @@ import PaymentForm from "../forms/PaymentForm.vue";
 
 const showCashOut = ref(false)
 const showPayment = ref(false)
-const emits = defineEmits()
+const emits = defineEmits(["refresh"])
 const currencies = computed(() => useGlobalStore().currencies as Currency[])
 const helpers = new Helpers()
 
@@ -80,7 +80,7 @@ function getCurrencyValue(currency: Currency) {
 
 function getWalletOperations() {
     showCashOut.value = false;
-    // loading.value = true;
-
+    showPayment.value = false;
+    emits("refresh")
 }
 </script>
