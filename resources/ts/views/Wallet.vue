@@ -56,8 +56,8 @@ import {EyeOutline} from "@vicons/ionicons5";
 import {ref} from "vue";
 import {useGlobalStore} from "../store";
 
-const branches = ref()
-const currencies = ref()
+const branches = computed(() => useGlobalStore().branches)
+const currencies = computed(() => useGlobalStore().currencies)
 const tomorrow = new Date().setDate(new Date().getDate() + 1)
 const now = new Date().valueOf()
 const range = ref<[number, number]>([now, tomorrow])
