@@ -42,7 +42,7 @@ const props = defineProps<{
     isEdit?: boolean;
     category?: Category;
 }>();
-const branches = ref()
+const branches = computed(() => useGlobalStore().branches)
 const emits = defineEmits(["refresh"]);
 const helpers = new Helpers();
 const formRef = ref<FormInst | null>(null);
@@ -102,7 +102,6 @@ function handleValidateClick(e: MouseEvent) {
 }
 
 onMounted(() => {
-    branches.value = useGlobalStore().branches
     if (props.isEdit) {
         formValue.value.name = props.category?.name;
         formValue.value.id = props.category?.id;
