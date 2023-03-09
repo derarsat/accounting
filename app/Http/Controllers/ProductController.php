@@ -53,7 +53,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'name' => 'required|unique:products',
-                'material' => 'required',
+                'material_id' => 'required|exists:materials,id',
                 'location' => 'required',
                 'weight' => 'required',
                 'branch_id' => 'required|exists:branches,id',
@@ -101,7 +101,7 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'name' => 'required|unique:products,name,'.$request->id,
-                'material' => 'required',
+                'material_id' => 'required|exists:materials,id',
                 'location' => 'required',
                 'weight' => 'required',
                 'branch_id' => 'required|exists:branches,id',
