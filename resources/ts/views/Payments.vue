@@ -187,7 +187,7 @@ const columns: TableColumns<any> = [
                         h(
                             NButton,
                             {
-                                type: row.currency_was < row.currency_became ? "primary" : "warning",
+                                type: row.currency_was < row.currency_became ? "primary" : "error",
                                 quaternary: true,
                                 size: "small",
                             },
@@ -244,7 +244,7 @@ const columns: TableColumns<any> = [
                         h(
                             NButton,
                             {
-                                type: row.current_account_was < row.current_account_became ? "primary" : "warning",
+                                type: row.current_account_was < row.current_account_became ? "primary" : "error",
                                 quaternary: true,
                                 size: "small",
                             },
@@ -255,7 +255,7 @@ const columns: TableColumns<any> = [
                                         size:20
                                     },
                                     {
-                                        default: () => h(row.current_account_was > row.current_account_became ? TrendingUpOutline : TrendingDownOutline, {}, {default: () => ''})
+                                        default: () => h(row.current_account_was < row.current_account_became ? TrendingUpOutline : TrendingDownOutline, {}, {default: () => ''})
                                     }
                                 ),
                             }
