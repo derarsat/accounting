@@ -43,7 +43,7 @@ const props = defineProps<{
     material?: Material;
 }>();
 const emits = defineEmits(["refresh"]);
-const branches = ref([])
+const branches = computed(useGlobalStore().branches)
 
 const helpers = new Helpers();
 const formRef = ref<FormInst | null>(null);
@@ -108,7 +108,6 @@ onMounted(() => {
         formValue.value.branch = props.material?.branch;
         formValue.value.branch_id = props.material?.branch_id;
     }
-    branches.value = useGlobalStore().branches
 
 });
 </script>
