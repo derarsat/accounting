@@ -43,7 +43,7 @@ const props = defineProps<{
     material?: Material;
 }>();
 const emits = defineEmits(["refresh"]);
-const branches = computed(useGlobalStore().branches)
+const branches = computed(() => useGlobalStore().branches)
 
 const helpers = new Helpers();
 const formRef = ref<FormInst | null>(null);
@@ -63,7 +63,7 @@ const rules = {
         trigger: ["input", "blur"],
     },
     branch_id: {
-        type:"number",
+        type: "number",
         required: true,
         message: "Please select branch",
         trigger: ["change", "blur"],
