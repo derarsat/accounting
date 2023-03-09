@@ -57,6 +57,13 @@ const routes: RouteRecordRaw[] = [
                 },
             },
             {
+                path: "payments",
+                name: "Payments",
+                component: () => {
+                    return import("../views/Payments.vue");
+                },
+            },
+            {
                 path: "categories",
                 name: "Categories",
                 component: () => {

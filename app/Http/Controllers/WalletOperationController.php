@@ -31,8 +31,8 @@ class WalletOperationController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $start = Carbon::createFromTimestampMs($request->start)->addDays(1)->toDateString();
-        $end = Carbon::createFromTimestampMs($request->end)->addDays(1)->toDateString();
+        $start = Carbon::createFromTimestampMs($request->start)->toDateString();
+        $end = Carbon::createFromTimestampMs($request->end)->toDateString();
         $sort_by = $request->sort;
         $type = $request->type;
         $order_by = $request->order;

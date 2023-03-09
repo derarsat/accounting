@@ -46,6 +46,7 @@ import {
     FileTrayOutline,
     SettingsOutline,
     StorefrontOutline,
+    ReceiptOutline,
     LibraryOutline, CubeOutline, BagOutline, BalloonOutline, WalletOutline, ColorFilterOutline
 } from "@vicons/ionicons5";
 import {RouterLink} from "vue-router";
@@ -119,6 +120,11 @@ const menuOptions = [
                 key: "quantities",
                 icon: renderIcon(CubeOutline),
             },
+            {
+                label: renderLabel({title: "Currencies"}),
+                key: "currencies",
+                icon: renderIcon(Cash),
+            },
         ]
     },
     {
@@ -131,11 +137,7 @@ const menuOptions = [
                 key: "traders",
                 icon: renderIcon(PeopleOutline),
             },
-            {
-                label: renderLabel({title: "Currencies"}),
-                key: "currencies",
-                icon: renderIcon(Cash),
-            },
+
             {
                 label: renderLabel({title: "Expenses"}),
                 key: "expenses",
@@ -145,6 +147,11 @@ const menuOptions = [
                 label: renderLabel({title: "Wallet"}),
                 key: "wallet",
                 icon: renderIcon(BagOutline),
+            },
+            {
+                label: renderLabel({title: "Payments"}),
+                key: "payments",
+                icon: renderIcon(ReceiptOutline),
             },
         ]
     },

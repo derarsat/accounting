@@ -58,7 +58,7 @@ import {useGlobalStore} from "../store";
 
 const branches = computed(() => useGlobalStore().branches)
 const currencies = computed(() => useGlobalStore().currencies)
-const tomorrow = new Date().setDate(new Date().getDate() + 2)
+const tomorrow = new Date().setDate(new Date().getDate() + 1)
 const now = new Date().valueOf()
 const range = ref<[number, number]>([now, tomorrow])
 

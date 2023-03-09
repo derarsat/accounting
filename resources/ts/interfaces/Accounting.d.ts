@@ -33,16 +33,18 @@ interface WalletOperation {
 }
 
 interface Payment {
-    currency_id?: number,
     id?: number,
-    trader_id?: number,
-    branch_id?: number,
     currency?: Currency,
     trader?: Trader,
     branch?: Branch,
     rate?: number,
     amount?: number,
+    currency_was?: number,
+    currency_became?: number,
+    current_account_was?: number,
+    current_account_became?: number,
     type?: PaymentAndInvoiceType,
+    created_at?: Date,
 }
 
 declare enum WalletOperationType {
