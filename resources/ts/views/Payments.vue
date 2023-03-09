@@ -255,7 +255,7 @@ const columns: TableColumns<any> = [
                                         size:20
                                     },
                                     {
-                                        default: () => h(row.current_account_was < row.current_account_became ? TrendingUpOutline : TrendingDownOutline, {}, {default: () => ''})
+                                        default: () => h(row.current_account_was > row.current_account_became ? TrendingUpOutline : TrendingDownOutline, {}, {default: () => ''})
                                     }
                                 ),
                             }
