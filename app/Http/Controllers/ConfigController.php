@@ -130,7 +130,7 @@ class ConfigController extends Controller
         $payment->currency_was = $currency->amount;
         $payment->current_account_was = $trader->current_account;
         //
-        if ($request->type == PaymentAndInvoiceType::in) {
+        if ($request->type == "in") {
 
             $currency->amount = $wallet_operation->currency_became = $payment->currency_became = $currency->amount + $amount;
             $trader->to_collect = $trader->to_collect - $amount;
