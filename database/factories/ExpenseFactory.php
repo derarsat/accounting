@@ -20,7 +20,7 @@ class ExpenseFactory extends Factory
         return [
             "name" => $this->faker->name,
             "total" => 0,
-            'branch_id' => $this->faker->numberBetween(1, 5)
+            'branch_id' => $this->faker->numberBetween(1, 2)
         ];
     }
 }

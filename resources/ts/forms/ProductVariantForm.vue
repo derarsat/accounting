@@ -132,8 +132,8 @@ import {CategoryService} from "../services/CategoryService";
 import {ProductService} from "../services/ProductService";
 import {useGlobalStore} from "../store";
 
-const quantities = ref([])
-const traders = ref([])
+const quantities = computed(() => useGlobalStore().quantities)
+const traders = computed(() => useGlobalStore().traders)
 const props = defineProps<{
     product_id: number,
     activeProductWeightType: string
@@ -144,8 +144,8 @@ const formRef = ref<FormInst | null>(null);
 const message = useMessage();
 const loading = ref(false)
 const formValue = ref<ProductVariant>({
-    quantity_id: null,
-    trader_id: null,
+    quantity_id: quantities.value[0]["id"],
+    trader_id: traders.value[0]["id"],
     quantity_value: null,
     purchased: null,
     min_price: null,
@@ -276,8 +276,7 @@ function handleValidateClick(e: MouseEvent) {
 onMounted(() => {
     formValue.value.product_id = props.product_id || 0;
 // get categories and branches
-    quantities.value = useGlobalStore().quantities
-    traders.value = useGlobalStore().traders
+
 });
 
 

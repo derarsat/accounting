@@ -76,7 +76,6 @@ import {AccountingService} from "../services/AccountingService";
 enum PaymentAndInvoiceType {
     in = "in",
     out = "out",
-
 }
 const branches = computed(() => useGlobalStore().branches)
 const currencies = computed(() => useGlobalStore().currencies)
@@ -88,7 +87,6 @@ const message = useMessage();
 const loading = ref(false)
 const formValue = ref<Payment>({
     id: null,
-    branch_id: branches.value[0]["id"],
     currency_id: currencies.value[0]["id"],
     trader_id: branches.value[0]["id"],
     rate: 1,

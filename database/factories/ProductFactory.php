@@ -19,14 +19,14 @@ class ProductFactory extends Factory
     {
         return [
             "name" => $this->faker->name,
-            "material" => $this->faker->sentence(3, true),
+            "material_id" => $this->faker->numberBetween(1, 3),
             "location" => $this->faker->word(),
             "weight" => $this->faker->randomElement(['KG', "Liter"]),
             "total_earnings" => $this->faker->numberBetween(1, 4500),
             "total_pieces_sold" => $this->faker->numberBetween(1, 32000),
             "alert_when_remaining" => $this->faker->numberBetween(1, 12),
-            "category_id" => $this->faker->numberBetween(1, 20),
-            "branch_id" => $this->faker->numberBetween(1, 3),
+            "category_id" => $this->faker->numberBetween(1, 10),
+            "branch_id" => $this->faker->numberBetween(1, 2),
         ];
     }
 }

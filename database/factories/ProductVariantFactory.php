@@ -18,9 +18,9 @@ class ProductVariantFactory extends Factory
     public function definition(): array
     {
         return [
-            "product_id" => $this->faker->numberBetween(1, 10),
+            "product_id" => $this->faker->numberBetween(1, 30),
             "quantity_id" => $this->faker->numberBetween(1, 10),
-            "trader_id" => $this->faker->numberBetween(1, 40),
+            "trader_id" => $this->faker->numberBetween(1, 10),
             "quantity_value" => $this->faker->numberBetween(1, 600),
             "purchased" => $this->faker->randomFloat(2, 4, 90),
             "min_price" => $this->faker->randomFloat(2, 4, 90),

@@ -16,4 +16,13 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class);
     }
+    public function branch(){
+        return $this->belongsTo(Branch::class);
+    }
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+    public function material(){
+        return $this->belongsTo(Material::class);
+    }
 }

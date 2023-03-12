@@ -17,6 +17,7 @@ class ProductResource extends JsonResource
     {
         return [
             'branch_id' => $this->branch_id,
+            'branch' => $this->branch,
             'category_id' => $this->category_id,
             'alert_when_remaining' => $this->alert_when_remaining,
             'id' => $this->id,

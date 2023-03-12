@@ -20,6 +20,7 @@ use App\Models\Currency;
 use App\Models\Expense;
 use App\Models\Material;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Quantity;
 use App\Models\Trader;
@@ -54,7 +55,6 @@ class ConfigController extends Controller
         return $this->sendResponse($data, true, []);
     }
 
-
     public function addProductVariant(Request $request): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(),
@@ -85,5 +85,9 @@ class ConfigController extends Controller
         return $this->sendResponse(["message" => "Product variant added successfully"], true, []);
     }
 
+    public function getProductsToAddInvoice()
+    {
+        $products = Product::has("")
+    }
 
 }

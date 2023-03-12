@@ -5,9 +5,9 @@
             show-trigger
             collapse-mode="width"
             :collapsed-width="64"
-            :width="240"
+            :width="220"
             :native-scrollbar="false"
-            style="min-height: 100vh"
+            style="height: 100vh;min-height: 100vh;max-height: 100vh"
         >
             <n-menu
                 :collapsed-width="64"
@@ -16,16 +16,28 @@
             />
         </n-layout-sider>
 
-        <n-layout-content content-style="padding:20px 40px">
+        <n-layout-content>
+<!--            <n-layout-header>-->
+<!--                <n-menu-->
+<!--                    mode="horizontal"-->
+<!--                    :options="navOptions"></n-menu>-->
+<!--            </n-layout-header>-->
             <n-spin size="large" :show="useGlobalStore().loading">
                 <template #icon>
                     <n-icon>
-                        <Reload />
+                        <Reload/>
                     </n-icon>
                 </template>
-                <router-view/>
+                <div style="padding:40px">
+                    <router-view/>
+
+                </div>
             </n-spin>
         </n-layout-content>
+
+        <n-icon>
+
+        </n-icon>
     </n-layout>
 </template>
 
@@ -47,7 +59,14 @@ import {
     SettingsOutline,
     StorefrontOutline,
     ReceiptOutline,
-    LibraryOutline, CubeOutline, BagOutline, BalloonOutline, WalletOutline, ColorFilterOutline
+    LibraryOutline,
+    CubeOutline,
+    BagOutline,
+    BalloonOutline,
+    WalletOutline,
+    ColorFilterOutline,
+    ShapesOutline,
+    SparklesOutline, DocumentOutline, DocumentsOutline, FlashOutline
 } from "@vicons/ionicons5";
 import {RouterLink} from "vue-router";
 
@@ -76,6 +95,7 @@ const menuOptions = [
         label: renderLabel({title: "Dashboard"}),
         key: "dashboard",
         icon: renderIcon(Pulse),
+        redirect: {name: 'Wallet'}
     },
     {
         label: "Catalog",
@@ -115,16 +135,8 @@ const menuOptions = [
                 key: "events",
                 icon: renderIcon(Shuffle),
             },
-            {
-                label: renderLabel({title: "Quantities"}),
-                key: "quantities",
-                icon: renderIcon(CubeOutline),
-            },
-            {
-                label: renderLabel({title: "Currencies"}),
-                key: "currencies",
-                icon: renderIcon(Cash),
-            },
+
+
         ]
     },
     {
@@ -137,12 +149,6 @@ const menuOptions = [
                 key: "traders",
                 icon: renderIcon(PeopleOutline),
             },
-
-            {
-                label: renderLabel({title: "Expenses"}),
-                key: "expenses",
-                icon: renderIcon(BalloonOutline),
-            },
             {
                 label: renderLabel({title: "Wallet"}),
                 key: "wallet",
@@ -153,10 +159,37 @@ const menuOptions = [
                 key: "payments",
                 icon: renderIcon(ReceiptOutline),
             },
+            {
+                label: renderLabel({title: "Invoices"}),
+                key: "invoices",
+                icon: renderIcon(DocumentsOutline),
+            },
         ]
     },
+    {
+        label: "Extras",
+        key: "extras",
+        icon: renderIcon(SparklesOutline),
+        children: [
+            {
+                label: renderLabel({title: "Quantities"}),
+                key: "quantities",
+                icon: renderIcon(CubeOutline),
+            },
+            {
+                label: renderLabel({title: "Currencies"}),
+                key: "currencies",
+                icon: renderIcon(Cash),
+            },
+
+            {
+                label: renderLabel({title: "Expenses"}),
+                key: "expenses",
+                icon: renderIcon(BalloonOutline),
+            },
+        ]
+    }
 
 ];
-
 onMounted(() => store.getConfig());
 </script>

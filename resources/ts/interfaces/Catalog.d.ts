@@ -12,6 +12,7 @@ interface Product {
     created_at?: Date;
     updated_at?: Date;
     variants?: ProductVariant[];
+    branch?:Branch,
 }
 
 interface ProductVariant {

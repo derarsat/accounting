@@ -115,6 +115,23 @@ const columns: TableColumns<any> = [
         sorter: true,
     },
     {
+        title: "Branch",
+        align: "center",
+        key: "branch_id",
+        render(row: Product) {
+            return h(
+                NText,
+                {
+                    type: "primary"
+                },
+                {
+                    default: () => row.branch?.name,
+                }
+            );
+        },
+        sorter: true,
+    },
+    {
         title: "Alert when remaining ",
         align: "center",
         key: "alert_when_remaining",

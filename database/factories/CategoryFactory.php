@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'branch_id' => $this->faker->numberBetween(1, 5)
+            'branch_id' => $this->faker->numberBetween(1, 2)
         ];
     }
 }

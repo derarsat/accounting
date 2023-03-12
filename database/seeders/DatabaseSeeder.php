@@ -22,16 +22,17 @@ class DatabaseSeeder extends Seeder
 //            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
 //            'remember_token' => Str::random(10),
 //        ]);
-//        \App\Models\Currency::factory(5)->create();
-//        \App\Models\Branch::factory(5)->create();
-//        \App\Models\Expense::factory(50)->create();
-//        \App\Models\Quantity::factory(100)->create();
-//        \App\Models\Category::factory(200)->create();
-        \App\Models\Trader::factory(300)->create();
+//        \App\Models\Branch::factory(2)->create();
+
+//        \App\Models\Currency::factory(2)->create();
+//        \App\Models\Quantity::factory(10)->create();
+//        \App\Models\Category::factory(10)->create();
+//        \App\Models\Trader::factory(10)->create();
+        \App\Models\Product::factory(30)->create();
+        \App\Models\ProductVariant::factory(100)->create();
+
 //        \App\Models\WalletOperation::factory(1000)->create();
-//
-//        \App\Models\Product::factory(100)->create();
-//        \App\Models\ProductVariant::factory(500)->create();
+//        \App\Models\Expense::factory(50)->create();
 
 
     }

@@ -1,12 +1,12 @@
 <template>
     <n-layout>
         <n-space vertical :size="20">
-            <n-grid :cols="6"  y-gap="10">
+            <n-grid :cols="6" y-gap="10">
                 <n-gi v-for="currency in currencies">
                     <n-statistic :label="currency.name" :value="getCurrencyValue(currency)"/>
                 </n-gi>
             </n-grid>
-            <n-space >
+            <n-space>
                 <n-button type="primary" @click.prevent="showCashOut = true">
                     <template #icon>
                         <n-icon>
@@ -23,7 +23,7 @@
                     </template>
                     Add Payment
                 </n-button>
-                <n-button type="primary">
+                <n-button type="primary" @click.prevent="showInvoice = true">
                     <template #icon>
                         <n-icon>
                             <swap-horizontal-outline/>
@@ -57,6 +57,18 @@
                     <PaymentForm @refresh="getWalletOperations()"/>
                 </n-card>
             </n-modal>
+            <n-modal v-model:show="showInvoice" >
+                <n-card
+                    style="width: 1000px"
+                    title="New Invoice"
+                    :bordered="false"
+                    size="huge"
+                    role="dialog"
+                    aria-modal="true"
+                >
+                    <InvoiceForm @refresh="getWalletOperations()"/>
+                </n-card>
+            </n-modal>
         </n-space>
     </n-layout>
 </template>
@@ -67,12 +79,14 @@ import CashOutForm from "../forms/CashOutForm.vue";
 import {useGlobalStore} from "../store";
 import {Helpers} from "../helpers";
 import PaymentForm from "../forms/PaymentForm.vue";
+import InvoiceForm from "../forms/InvoiceForm.vue";
 
 const showCashOut = ref(false)
+const showInvoice = ref(false)
 const showPayment = ref(false)
 const emits = defineEmits(["refresh"])
-const currencies = computed(() => useGlobalStore().currencies as Currency[])
 const helpers = new Helpers()
+const currencies = computed(() => useGlobalStore().currencies as Currency[])
 
 function getCurrencyValue(currency: Currency) {
     return helpers.format(currency.amount) + " " + currency.symbol

@@ -38,6 +38,8 @@ interface Payment {
     trader?: Trader,
     branch?: Branch,
     rate?: number,
+    currency_id?: number,
+    trader_id?: number,
     amount?: number,
     currency_was?: number,
     currency_became?: number,
