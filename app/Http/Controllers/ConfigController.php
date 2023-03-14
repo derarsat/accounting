@@ -87,7 +87,8 @@ class ConfigController extends Controller
 
     public function getProductsToAddInvoice()
     {
-        $products = Product::has("")
+        // $products = Product::has("");
+        // return 1;
     }
 
 }
